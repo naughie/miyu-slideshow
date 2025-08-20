@@ -1,0 +1,10 @@
+@import "tailwindcss" source(none);
+@source "../index.html";
+@source "./**/*.tsx";
+
+@theme {
+  --frame-padding: 1.5vh;
+  --max-image-height: 90vh;
+  --max-image-width: calc(var(--max-image-height) * 16 / 9);
+  --max-frame-height: calc(var(--max-image-height) + var(--frame-padding) * 2);
+}
