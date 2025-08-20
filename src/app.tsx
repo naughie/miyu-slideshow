@@ -1,5 +1,5 @@
 import { useEffect, useState } from "preact/hooks";
-
+import { FullscreenProvider } from "./fullscreen";
 import ImageShow from "./ImageShow";
 
 const getImages = async () => {
@@ -34,6 +34,7 @@ const randomPick = (prevIdx?: number) => {
 
 type States = {
   currIdx: number;
+  prevIdx?: number;
   fading: boolean;
 };
 
@@ -68,6 +69,7 @@ export function App() {
     const timerID = setTimeout(() => {
       setStates({
         currIdx: randomPick(states.currIdx),
+        prevIdx: states.currIdx,
         fading: false,
       });
     }, 500);
@@ -77,5 +79,12 @@ export function App() {
     };
   }, [states.fading]);
 
-  return <ImageShow url={images[states.currIdx]} fading={states.fading} />;
+  const currUrl = images[states.currIdx];
+  const prevUrl = states.prevIdx ? images[states.prevIdx] : undefined;
+
+  return (
+    <FullscreenProvider>
+      <ImageShow currUrl={currUrl} prevUrl={prevUrl} fading={states.fading} />
+    </FullscreenProvider>
+  );
 }
